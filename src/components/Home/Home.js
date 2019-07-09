@@ -12,23 +12,30 @@ class Home extends React.Component {
     scats: [],
   }
 
-  componentDidMount() {
+  getScats = () => {
     const { uid } = firebase.auth().currentUser;
     scatData.getMyScats(uid)
       .then(scats => this.setState({ scats }))
       .catch((err) => { console.error('coud not get scats', err); });
   }
-  // editEvent = (e) => {
-  //   e.preventDefault();
-  //   const orderId = '12345';
-  //   this.props.history.push(`/edit/${orderId}`);
-  // }
+
+  componentDidMount() {
+    this.getScats();
+  }
+
+
+  deleteScat = (scatId) => {
+    scatData.deleteScat(scatId)
+      .then(() => this.getScats())
+      .catch(err => console.error('unable to delete', err));
+  }
 
   render() {
     const makeScatCards = this.state.scats.map(scat => (
       <ScatCard
       key={scat.id}
       scat={scat}
+      deleteScat={this.deleteScat}
       />
     ));
 
