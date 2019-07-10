@@ -108,8 +108,8 @@ render() {
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
     </div>
-    );
-  }
+  );
+}
 }
 
 export default NewScat;
